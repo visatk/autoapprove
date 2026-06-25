@@ -19,6 +19,25 @@ function getBot(env: Env): Bot {
   // Add auto-retry middleware for handling rate limits
   bot.api.config.use(autoRetry());
 
+  // Handle the /start command
+  bot.command("start", async (ctx) => {
+    const helpText = `
+Welcome to the *Auto-Approve Bot*! 🚀
+
+I can automatically approve join requests in your Telegram groups and channels.
+
+*How to use:*
+1. Add me to your group/channel as an Administrator.
+2. Ensure I have the *"Invite Users via Link"* permission.
+3. Enable *"Approve New Members"* in your chat settings.
+4. I will take care of the rest!
+
+*Developer Info:*
+Developed by [@drkingbd](https://t.me/drkingbd)
+`;
+    await ctx.reply(helpText, { parse_mode: "Markdown" });
+  });
+
   // Listen for chat join requests
   bot.on("chat_join_request", async (ctx) => {
     const chat = ctx.chatJoinRequest.chat;
