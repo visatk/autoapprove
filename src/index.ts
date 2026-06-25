@@ -65,6 +65,16 @@ Developed by [@drkingbd](https://t.me/drkingbd)
       await env.DB.batch([insertChat, insertUser]);
 
       console.log(`Approved user ${user.id} in chat ${chat.id}`);
+
+      // Attempt to send a private welcome message to the user
+      try {
+        const welcomeMessage = `Hello ${user.first_name}! 👋\n\nYour request to join *${chat.title || "the group"}* has been automatically approved. Welcome!`;
+        await ctx.api.sendMessage(user.id, welcomeMessage, { parse_mode: "Markdown" });
+      } catch (msgError) {
+        // Users might have blocked the bot, or Telegram might restrict messaging them.
+        console.error(`Could not send private message to user ${user.id}:`, msgError);
+      }
+
     } catch (error) {
       console.error(`Failed to process user ${user.id} in chat ${chat.id}:`, error);
     }
