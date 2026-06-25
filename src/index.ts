@@ -35,7 +35,10 @@ I can automatically approve join requests in your Telegram groups and channels.
 *Developer Info:*
 Developed by [@drkingbd](https://t.me/drkingbd)
 `;
-    await ctx.reply(helpText, { parse_mode: "Markdown" });
+    await ctx.reply(helpText, { 
+      parse_mode: "Markdown",
+      disable_web_page_preview: true
+    });
   });
 
   // Listen for chat join requests
